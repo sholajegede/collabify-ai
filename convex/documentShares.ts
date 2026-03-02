@@ -212,3 +212,18 @@ export const recordAccess = mutation({
     });
   },
 });
+
+export const getShareForCurrentUser = query({
+  args: { documentId: v.id("documents") },
+  handler: async (ctx, { documentId }) => {
+    const user = await getCurrentUser(ctx);
+    if (!user) return null;
+
+    return ctx.db
+      .query("documentShares")
+      .withIndex("by_document_and_user", (q) =>
+        q.eq("documentId", documentId).eq("sharedWithUserId", user._id)
+      )
+      .unique();
+  },
+});

@@ -1,4 +1,3 @@
-// app/org/[slug]/documents/[documentId]/page.tsx
 "use client";
 
 import { useQuery, useMutation } from "convex/react";
@@ -48,6 +47,10 @@ export default function DocumentPage() {
     documentId: params.documentId as any,
   });
 
+  const myShare = useQuery(api.documentShares.getShareForCurrentUser, {
+    documentId: params.documentId as any,
+  });
+
   const updateDocument = useMutation(api.documents.update);
   const analyzeDocument = useMutation(api.ai.analyze);
   const saveVersion = useMutation(api.documentVersions.save);
@@ -57,6 +60,7 @@ export default function DocumentPage() {
   const addComment = useMutation(api.comments.add);
   const removeComment = useMutation(api.comments.remove);
   const resolveComment = useMutation(api.comments.resolve);
+  const recordAccess = useMutation(api.documentShares.recordAccess);
 
   const [title, setTitle] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
@@ -88,6 +92,12 @@ export default function DocumentPage() {
       leavePresence({ documentId: params.documentId as any }).catch(() => {});
     };
   }, [document?._id]);
+
+  useEffect(() => {
+    if (document?.accessSource === "share" && myShare?._id) {
+      recordAccess({ shareId: myShare._id }).catch(() => {});
+    }
+  }, [document?._id, myShare?._id]);
 
   const handleContentChange = useCallback(
     (newContent: string) => {
