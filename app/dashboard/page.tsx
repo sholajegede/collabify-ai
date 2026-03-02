@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 "use client";
 
 import { useQuery, useMutation } from "convex/react";

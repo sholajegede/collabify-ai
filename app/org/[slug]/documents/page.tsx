@@ -1,4 +1,3 @@
-// app/org/[slug]/documents/page.tsx
 "use client";
 
 import { useMutation } from "convex/react";

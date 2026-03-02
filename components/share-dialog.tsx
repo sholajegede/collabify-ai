@@ -1,4 +1,3 @@
-// components/share-dialog.tsx
 "use client";
 
 import { useQuery, useMutation } from "convex/react";

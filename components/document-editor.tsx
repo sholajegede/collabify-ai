@@ -1,4 +1,3 @@
-// components/document-editor.tsx
 "use client";
 
 import "@blocknote/core/fonts/inter.css";

@@ -1,4 +1,3 @@
-// app/dashboard/shared/page.tsx
 "use client";
 
 import { useQuery } from "convex/react";
